@@ -21,7 +21,7 @@ helper.cursor_hold = function(enabled, bufnr)
 
   local augroup = api.nvim_create_augroup('Signature', { clear = false })
   if enabled then
-    api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+    api.nvim_create_autocmd({ 'CursorHoldI' }, {
       group = augroup,
       buffer = bufnr,
       callback = function()
@@ -29,7 +29,7 @@ helper.cursor_hold = function(enabled, bufnr)
       end,
       desc = 'signature on cursor hold',
     })
-    api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+    api.nvim_create_autocmd({ 'CursorHoldI' }, {
       group = augroup,
       buffer = bufnr,
       callback = function()
@@ -42,7 +42,7 @@ helper.cursor_hold = function(enabled, bufnr)
     api.nvim_clear_autocmds({
       buffer = bufnr,
       group = augroup,
-      event = { 'CursorHold', 'CursorHoldI' },
+      event = { 'CursorHoldI' },
     })
   end
 end

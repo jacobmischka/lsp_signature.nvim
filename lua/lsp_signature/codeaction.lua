@@ -268,14 +268,15 @@ function M.setup(cfg)
   local augroup = vim.api.nvim_create_augroup('Signature_fillfields', {
     clear = false,
   })
-  vim.api.nvim_create_autocmd({ 'InsertCharPre', 'CursorMovedI', 'CursorHold', 'CursorHoldI' }, {
+  vim.api.nvim_create_autocmd({ 'InsertCharPre', 'CursorMovedI', 'CursorHoldI' }, {
     -- check if the character before the cursor is `{` or it is all spaces
     group = augroup,
     callback = debounce(function(arg)
       -- log(arg)
       local line = vim.fn.getline('.')
       local col = vim.fn.col
-      if line:sub(1, col('.') - 1):match('%s*{%s*') or line:sub(1, col('.')):match('^%s*$') then
+      local str = line:sub(1, col('.') - 1)
+      if str ~= '' and (str:match('%s*{%s*') or str:match('^%s+$')) then
         M.show_unfilled_fields(arg.buf)
       end
     end, ms), -- debounce 500ms
